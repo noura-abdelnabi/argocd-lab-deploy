@@ -6,7 +6,7 @@ pipeline {
         REPO_NAME       = 'jenkins-app'
         IMAGE_NAME      = "${DOCKER_HUB_USER}/${REPO_NAME}"
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
-        GITHUB_REPO_URL = 'github.com/nouraabdelnabi/iVolve-Training.git'
+        GITHUB_REPO_URL = 'github.com/noura-abdelnabi/argocd-lab-deploy.git'
     }
 
     stages {
@@ -32,7 +32,7 @@ pipeline {
                     sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
 
                     // 5. Edit new image in deployment.yaml file
-                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' 'ArgoCD/Lab 25/k8s/deployment.yaml'"
+                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' k8s/deployment.yaml"
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'TOKEN', usernameVariable: 'USER')]) {
                         sh "git config user.email 'jenkins@example.com'"
                         sh "git config user.name 'Jenkins CI'"
-                        sh "git add 'ArgoCD/Lab 25/k8s/deployment.yaml'"
+                        sh "git add k8s/deployment.yaml"
                         sh "git commit -m 'Update image tag to ${IMAGE_TAG} [skip ci]'"
                         sh "git push https://${USER}:${TOKEN}@${GITHUB_REPO_URL} HEAD:main"
                     }
