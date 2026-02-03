@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USER = 'noura-abdelnabi'
+        DOCKER_HUB_USER = 'nouraabdelnabi'
         REPO_NAME       = 'jenkins-app'
         IMAGE_NAME      = "${DOCKER_HUB_USER}/${REPO_NAME}"
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
